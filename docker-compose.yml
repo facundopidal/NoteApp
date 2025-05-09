@@ -5,12 +5,12 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "4200:4200"
-      - "49153:49153"  # Live reload socket
+      - "49153:49153"
     volumes:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - CHOKIDAR_USEPOLLING=true  # Mejora compatibilidad con montajes en Docker
+      - CHOKIDAR_USEPOLLING=true
     command: npm run start
 
   backend:
@@ -22,6 +22,6 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
-    command: npm run start:dev
     environment:
       - NODE_ENV=development
+    command: npm run start:dev
