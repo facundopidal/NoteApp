@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Epilogue";
+  src: url("/fonts/Epilogue-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Epilogue-ExtraBold";
+  src: url("/fonts/Epilogue-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+  font-style: normal;
+}
+
+@theme {
+  --font-epilogue: "Epilogue";
+  --font-epilogue-extrabold: "Epilogue-ExtraBold";
+}
