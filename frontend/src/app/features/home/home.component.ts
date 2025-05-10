@@ -11,13 +11,14 @@ import { RouterLink } from '@angular/router';
       class="h-screen flex flex-col justify-center items-center font-epilogue"
     >
       <h1 class="font-epilogue-extrabold text-5xl text-center -mt-20">
-        Welcome to NoteApp
+        Bienvenido a
       </h1>
       <p
         class="text-neutral-500 text-xl mt-4 font-semibold text-center max-w-2xl mx-auto"
       >
-        A simple note-taking app that allows you to create, edit, and delete
-        notes.
+        Tu espacio para organizar tus notas y tareas de manera eficiente.
+        <br />
+        ¡Comienza a gestionar tu información de forma sencilla y efectiva!
       </p>
       <div class="flex justify-center items-center mt-8 gap-4">
         <button>
@@ -25,7 +26,7 @@ import { RouterLink } from '@angular/router';
             routerLink="/register"
             class="bg-black text-white font-semibold px-4 py-2 rounded-sm cursor-pointer hover:bg-zinc-800 transition-colors"
           >
-            Get Started
+            Crear cuenta
           </a>
         </button>
         <button>
@@ -33,7 +34,7 @@ import { RouterLink } from '@angular/router';
             routerLink="/login"
             class="text-black font-semibold px-4 py-2 rounded-sm cursor-pointer border border-neutral-300 hover:bg-neutral-100 transition-colors "
           >
-            Login
+            Iniciar sesión
           </a>
         </button>
       </div>
