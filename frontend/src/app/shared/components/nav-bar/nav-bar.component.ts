@@ -11,8 +11,8 @@ import { ButtonComponent } from '../button/button.component';
     >
       <a routerLink="" class="text-lg">NoteApp</a>
       <div class="flex items-center space-x-4">
-        <app-button routerLink="/register" text="Registrarse" />
-        <app-button routerLink="/login" text="Iniciar Sesión" />
+        <app-button routerLink="/register"> Registrarse </app-button>
+        <app-button routerLink="/login"> Iniciar Sesión </app-button>
       </div>
     </nav>
   `,

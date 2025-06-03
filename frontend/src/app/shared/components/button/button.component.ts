@@ -11,13 +11,12 @@ import { Component, Input } from '@angular/core';
       [type]="type"
       [disabled]="disabled"
     >
-      {{ text }}
+      <ng-content></ng-content>
     </button>
   `,
   styles: ``,
 })
 export class ButtonComponent {
-  @Input({ required: true }) text = ' ';
   @Input() type: 'button' | 'submit' = 'button';
   @Input() disabled = false;
 }
