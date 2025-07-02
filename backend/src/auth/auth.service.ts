@@ -8,12 +8,14 @@ import { UserService } from 'src/user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants/jwt.constants';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly prisma: PrismaService,
   ) {}
 
   async login({ email, password }: LoginDto) {
@@ -40,7 +42,16 @@ export class AuthService {
   }
 
   async register(createUserDto: CreateUserDto) {
-    return await this.userService.create(createUserDto);
+    const user = await this.userService.create(createUserDto);
+
+    await this.prisma.group.create({
+      data: {
+        name: 'Mis notas',
+        userId: user.id,
+      },
+    });
+
+    return user;
   }
 
   async refresh(token: string) {
@@ -57,5 +68,13 @@ export class AuthService {
     } catch {
       throw new ForbiddenException('Refresh token inválido');
     }
+  }
+
+  findUserById(userId: string) {
+    return this.userService.findOne(userId).then((user) => {
+      if (!user) throw new UnauthorizedException('Usuario no encontrado');
+
+      return user;
+    });
   }
 }

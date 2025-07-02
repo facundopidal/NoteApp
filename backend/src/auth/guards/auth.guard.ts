@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
         await this.jwtService.verifyAsync(requestToken, {
           secret: jwtConstants.secret,
         });
-      console.log(payload);
       request['user'] = payload;
     } catch {
       throw new ForbiddenException('Token no autorizado');
@@ -32,7 +31,6 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractToken(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    return request.cookies['access_token'];
   }
 }
