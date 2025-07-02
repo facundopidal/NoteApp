@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 import { NavBarComponent } from '../../../shared/components/nav-bar/nav-bar.component';
 
 @Component({
@@ -16,7 +17,7 @@ import { NavBarComponent } from '../../../shared/components/nav-bar/nav-bar.comp
     <main
       class="h-screen flex flex-col justify-center items-center font-epilogue"
     >
-      <h1 class="font-epilogue-extrabold text-4xl text-center mb-6">
+      <h1 class="font-epilogue-extrabold text-3xl sm:text-4xl text-center mb-6">
         Login to your account
       </h1>
       <form
@@ -62,13 +63,21 @@ import { NavBarComponent } from '../../../shared/components/nav-bar/nav-bar.comp
           </div>
           }
         </div>
+        @if(errorMessage) {
+          <div class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded border border-red-200">
+            {{ errorMessage }}
+          </div>
+        }
         <button
           type="submit"
-          [disabled]="loginForm.invalid"
-          [class.cursor-not-allowed]="loginForm.invalid"
-          [class.cursor-pointer]="loginForm.valid"
-          class="bg-black text-white font-semibold px-4 py-2 rounded-sm hover:bg-zinc-800 transition-colors mt-4 disabled:opacity-50"
+          [disabled]="loginForm.invalid || isSubmitting"
+          [class.cursor-not-allowed]="loginForm.invalid || isSubmitting"
+          [class.cursor-pointer]="loginForm.valid && !isSubmitting"
+          class="bg-black text-white font-semibold px-4 py-2 rounded-sm hover:bg-zinc-800 transition-colors mt-4 disabled:opacity-50 flex justify-center items-center"
         >
+          @if(isSubmitting) {
+            <span class="inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+          }
           Login
         </button>
       </form>
@@ -86,8 +95,14 @@ import { NavBarComponent } from '../../../shared/components/nav-bar/nav-bar.comp
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isSubmitting = false;
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -96,11 +111,22 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      // Aquí va la lógica de login
-      // console.log('Login', this.loginForm.value);
-      alert('Login successful!');
-
-      this.router.navigate(['/dashboard']);
+      this.isSubmitting = true;
+      this.errorMessage = '';
+      
+      const { email, password } = this.loginForm.value;
+      
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          console.log('Login successful', response);
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+          this.isSubmitting = false;
+          this.errorMessage = error.error?.message || 'Invalid email or password. Please try again.';
+        }
+      });
     } else {
       this.loginForm.markAllAsTouched();
     }
