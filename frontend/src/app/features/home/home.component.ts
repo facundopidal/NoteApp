@@ -11,16 +11,19 @@ import { RouterLink } from '@angular/router';
       class="h-screen flex flex-col justify-center items-center font-epilogue"
     >
       <h1 class="font-epilogue-extrabold text-5xl text-center -mt-20">
-        Bienvenido a
+        Bienvenido a NoteApp
       </h1>
-      <p
-        class="text-neutral-500 text-xl mt-4 font-semibold text-center max-w-2xl mx-auto"
+      <article
+        class="text-neutral-500 text-xl mt-4 font-semibold text-balance text-center max-w-2xl mx-auto"
       >
-        Tu espacio para organizar tus notas y tareas de manera eficiente.
-        <br />
-        ¡Comienza a gestionar tu información de forma sencilla y efectiva!
-      </p>
-      <div class="flex justify-center items-center mt-8 gap-4">
+        <p class="mb-2">
+          Tu espacio para organizar tus notas y tareas de manera eficiente.
+        </p>
+        <p>
+          ¡Comienza a gestionar tu información de forma sencilla y efectiva!
+        </p>
+      </article>
+      <div class="flex flex-wrap justify-center items-center mt-8 gap-4">
         <button>
           <a
             routerLink="/register"
@@ -32,7 +35,7 @@ import { RouterLink } from '@angular/router';
         <button>
           <a
             routerLink="/login"
-            class="text-black font-semibold px-4 py-2 rounded-sm cursor-pointer border border-neutral-300 hover:bg-neutral-100 transition-colors "
+            class="text-black font-semibold px-4 py-2 rounded-sm cursor-pointer border border-neutral-300 hover:bg-neutral-100 transition-colors"
           >
             Iniciar sesión
           </a>

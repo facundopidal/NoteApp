@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
@@ -7,10 +7,13 @@ import { ButtonComponent } from '../button/button.component';
   imports: [RouterLink, ButtonComponent],
   template: `
     <nav
-      class="font-epilogue font-bold flex justify-between items-center py-4 px-6"
+      class="font-epilogue font-bold flex flex-col items-center gap-4 py-4 px-6 md:flex-row md:justify-between"
     >
       <a routerLink="" class="text-lg">NoteApp</a>
-      <div class="flex items-center space-x-4">
+      <div
+        class="flex flex-wrap justify-center items-center space-x-4 gap-y-2"
+        [class.invisible]="!showButtons"
+      >
         <app-button routerLink="/register"> Registrarse </app-button>
         <app-button routerLink="/login"> Iniciar Sesión </app-button>
       </div>
@@ -18,4 +21,12 @@ import { ButtonComponent } from '../button/button.component';
   `,
   styles: ``,
 })
-export class NavBarComponent {}
+export class NavBarComponent implements OnInit {
+  showButtons = true;
+  constructor(private router: Router) {}
+  ngOnInit(): void {
+    this.showButtons =
+      !this.router.url.includes('/register') &&
+      !this.router.url.includes('/login');
+  }
+}
