@@ -2,26 +2,28 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile # Cambia a Dockerfile.dev para desarrollo
     ports:
-      - "4200:4200"
-      - "49153:49153"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - "80:80" # Cambia a "4200:4200" y "49153:49153" para desarrollo
     environment:
-      - CHOKIDAR_USEPOLLING=true
-    command: npm run start
+      - NODE_ENV=production # Cambia a development para desarrollo
+    # volumes:
+    #   - ./frontend:/app
+    #   - /app/node_modules
+    #   (Descomenta para desarrollo: hot reload)
+    command: ["nginx", "-g", "daemon off;"] # Cambia a "npm run start" para desarrollo
 
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile # Cambia a Dockerfile.dev para desarrollo
     ports:
       - "3000:3000"
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     environment:
-      - NODE_ENV=development
-    command: npm run start:dev
+      - NODE_ENV=production # Cambia a development para desarrollo
+      - SECRET_JWT_KEY=${SECRET_JWT_KEY}
+    # volumes:
+    #   - ./backend:/app
+    #   - /app/node_modules
+    #   (Descomenta para desarrollo: hot reload)
+    command: ["node", "dist/main.js"] # Cambia a "npm run start:dev" para desarrollo
