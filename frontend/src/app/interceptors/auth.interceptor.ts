@@ -21,6 +21,11 @@ export const authInterceptor: HttpInterceptorFn = (
     withCredentials: true,
   });
 
+  // Salir temprano si estamos en rutas de login o register
+  if (req.url.includes('/login') || req.url.includes('/register')) {
+    return next(authReq);
+  }
+
   return next(authReq).pipe(
     catchError((error: unknown) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
