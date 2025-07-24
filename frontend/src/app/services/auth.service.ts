@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, tap } from 'rxjs';
+import { catchError, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
@@ -75,6 +75,10 @@ export class AuthService {
     return this.http.get<User | null>(`${this.apiUrl}/profile`).pipe(
       tap((user) => {
         this.setCurrentUser(user);
+      }),
+      catchError((error) => {
+        this.setCurrentUser(null);
+        return [null];
       })
     );
   }
