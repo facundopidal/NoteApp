@@ -174,7 +174,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:root@localhost/noteapp"
+        "value": "postgres://koyeb-adm:npg_OEP1tM7DrGnJ@ep-spring-frog-a402euk2.us-east-1.pg.koyeb.app/koyebdb"
       }
     }
   },

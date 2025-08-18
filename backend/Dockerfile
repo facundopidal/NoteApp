@@ -15,4 +15,4 @@ COPY --from=build /app/generated ./generated
 COPY package*.json ./
 ENV NODE_ENV=production
 EXPOSE 3000
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main"]
