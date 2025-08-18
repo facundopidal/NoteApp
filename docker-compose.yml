@@ -18,12 +18,15 @@ services:
       context: ./backend
       dockerfile: Dockerfile # Cambia a Dockerfile.dev para desarrollo
     ports:
-      - "3000:3000"
+      - "3000:3000" # Cambiado para evitar conflicto de puertos
     environment:
-      - NODE_ENV=production # Cambia a development para desarrollo
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
       - SECRET_JWT_KEY=${SECRET_JWT_KEY}
+      - PORT=3000
     # volumes:
     #   - ./backend:/app
     #   - /app/node_modules
     #   (Descomenta para desarrollo: hot reload)
-    command: ["node", "dist/main.js"] # Cambia a "npm run start:dev" para desarrollo
+    command: ["sh", "-c", "npx prisma migrate deploy && node dist/main"]
+    restart: unless-stopped
