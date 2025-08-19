@@ -160,7 +160,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../.env",
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
@@ -170,11 +170,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgres://koyeb-adm:npg_OEP1tM7DrGnJ@ep-spring-frog-a402euk2.us-east-1.pg.koyeb.app/koyebdb"
+        "value": null
       }
     }
   },
